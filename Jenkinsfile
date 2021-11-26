@@ -3,7 +3,7 @@ pipeline {
     environment {
         image_name = 'kylekingcdn/caddy-dns-route53'
         image_tag = 'latest'
-        architectures = 'linux/arm/v7,linux/arm64/v8,linux/amd64'
+        architectures = 'linux/arm64/v8,linux/amd64'
         registry_endpoint = ''
         registry_credentials = 'dockerhub-credentials'
     }
