@@ -10,22 +10,18 @@ pipeline {
         stage('Build Images') {
             steps {
                 script {
-                    docker.withRegistry('', registry_credentials) {
-                        image = docker.build(image_name+':'+image_tag, "\
-                            --force-rm \
-                            --no-cache \
-                            --pull \
-                            .")
-                    }
+                    sh label: "Build Image ", script: """
+                        docker buildx build -t ${image_name}:${image_tag} --force-rm --no-cache --pull .
+                    """
                 }
             }
         }
         stage('Push Images') {
             steps {
                 script {
-                    docker.withRegistry('', registry_credentials) {
-                        image.push()
-                    }
+                    sh label: "Push Image ", script: """
+                        docker push ${image_name}:${image_tag}
+                    """
                 }
             }
         }
