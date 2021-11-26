@@ -11,9 +11,11 @@ pipeline {
         stage('Build Images') {
             steps {
                 script {
-                    sh label: "Build Image ", script: """
-                        docker buildx build -t ${image_name}:${image_tag} --platform ${architectures} --force-rm --no-cache --pull --push .
-                    """
+                    docker.withRegistry( '', registry_credentials ) {
+                        sh label: "Build Image ", script: """
+                            docker buildx build -t ${image_name}:${image_tag} --platform ${architectures} --force-rm --no-cache --pull --push .
+                        """
+                    }
                 }
             }
         }
