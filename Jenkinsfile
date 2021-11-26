@@ -13,6 +13,7 @@ pipeline {
                 script {
                     docker.withRegistry( '', registry_credentials ) {
                         sh label: "Build Image ", script: """
+                            docker buildx create --use && \
                             docker buildx build -t ${image_name}:${image_tag} --platform ${architectures} --force-rm --no-cache --pull --push .
                         """
                     }
